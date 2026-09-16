@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://ddpgw5ke83x26"]
+
+[ext_resource type="Texture2D" uid="uid://6w0qivcl2n4m" path="res://assets/sprites/entities/miata.png" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://dwag3qc170qy1" path="res://scripts/player.gd" id="1_g2els"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_lnu2h"]
+
+[node name="Player" type="CharacterBody3D" unique_id=1463991567 groups=["player_car"]]
+collision_mask = 258
+script = ExtResource("1_g2els")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=834840101]
+transform = Transform3D(0.47, 0, 0, 0, 0.47, 0, 0, 0, 0.47, 0, 0.22, 0)
+shape = SubResource("SphereShape3D_lnu2h")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=969359796]
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer" unique_id=377487314]
+texture = ExtResource("1_3vyb7")
+offset = Vector2(0, -16)

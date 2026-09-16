@@ -1,0 +1,127 @@
+[gd_scene format=3 uid="uid://b4uwxfbtmrnx0"]
+
+[ext_resource type="PackedScene" uid="uid://ddpgw5ke83x26" path="res://scenes/player.tscn" id="1_uwrxv"]
+[ext_resource type="Texture2D" uid="uid://d0073ad8eqo8o" path="res://assets/sprites/tracks/mariocircuit4.png" id="1_yqjtg"]
+[ext_resource type="Texture2D" uid="uid://xyuu71axmnb2" path="res://assets/sprites/tracks/placeholderbg.png" id="2_lbhrr"]
+[ext_resource type="FontFile" uid="uid://cy8t3u3258h82" path="res://assets/fonts/SprinterSans.ttf" id="4_lbhrr"]
+[ext_resource type="Texture2D" uid="uid://ce0xe5u5opsdj" path="res://assets/sprites/hud/tachooverlay.png" id="5_p57ef"]
+[ext_resource type="Texture2D" uid="uid://cosay1e050o1c" path="res://assets/sprites/hud/tachoprogress.png" id="6_u5sy4"]
+
+[sub_resource type="Environment" id="Environment_vjlar"]
+background_mode = 3
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2v1hp"]
+lightmap_size_hint = Vector2i(12, 12)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lnu2h"]
+shading_mode = 0
+albedo_texture = ExtResource("1_yqjtg")
+texture_filter = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vjlar"]
+size = Vector3(0.61816406, 1, 0.03149414)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2v1hp"]
+size = Vector3(1.1035156, 1, 1.8847656)
+
+[sub_resource type="Gradient" id="Gradient_lnu2h"]
+offsets = PackedFloat32Array(0, 0.5, 0.51, 1)
+colors = PackedColorArray(0.054902, 0.207843, 0.552941, 1, 0.188235, 0.470588, 0.886275, 1, 0.843137, 0.85098, 0.717647, 1, 0.843137, 0.85098, 0.717647, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rb6b8"]
+gradient = SubResource("Gradient_lnu2h")
+fill_from = Vector2(0.51086956, 0)
+fill_to = Vector2(0.51304346, 1)
+
+[node name="Node3D" type="Node3D" unique_id=1553623825]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1607806157]
+environment = SubResource("Environment_vjlar")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1627305067]
+transform = Transform3D(18.487423, 0, 0, 0, 6.5077386, 0, 0, 0, 18.339203, 0, 0, 0)
+mesh = SubResource("PlaneMesh_2v1hp")
+surface_material_override/0 = SubResource("StandardMaterial3D_lnu2h")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=1658075235]
+collision_layer = 2
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1173357220]
+transform = Transform3D(1.71771, 0, 0, 0, 0.29049528, 0, 0, 0, 0.9999769, 0, 0.11693929, 0.021349695)
+shape = SubResource("BoxShape3D_vjlar")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1493620680]
+transform = Transform3D(1.71771, 0, 0, 0, 0.024361666, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_2v1hp")
+
+[node name="Player" parent="." unique_id=937364183 instance=ExtResource("1_uwrxv")]
+transform = Transform3D(-0.5875609, 0, -5.1366204e-08, 0, 0.5875609, 0, 5.1366204e-08, 0, -0.5875609, 11.059492, 0.021187335, 1.4701815)
+
+[node name="Background" type="CanvasLayer" parent="Player" unique_id=2100774740]
+layer = -100
+
+[node name="TextureRect" type="TextureRect" parent="Player/Background" unique_id=1711763866]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_rb6b8")
+
+[node name="TextureRect2" type="TextureRect" parent="Player/Background" unique_id=620258629]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 115.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_rb6b8")
+
+[node name="Parallax2D" type="Parallax2D" parent="Player/Background" unique_id=557499524]
+repeat_size = Vector2(512, 0)
+
+[node name="TextureRect" type="TextureRect" parent="Player/Background/Parallax2D" unique_id=1287392282]
+offset_top = 83.0
+offset_right = 761.0
+offset_bottom = 123.0
+texture = ExtResource("2_lbhrr")
+stretch_mode = 2
+
+[node name="HUD" type="CanvasLayer" parent="Player" unique_id=323583770]
+
+[node name="ColorRect" type="ColorRect" parent="Player/HUD" unique_id=735496324]
+offset_top = 184.0
+offset_right = 320.0
+offset_bottom = 224.0
+color = Color(0, 0, 0, 1)
+
+[node name="Speed" type="Label" parent="Player/HUD" unique_id=172086626]
+offset_left = 218.0
+offset_top = 215.0
+offset_right = 316.0
+offset_bottom = 223.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_lbhrr")
+theme_override_font_sizes/font_size = 8
+text = "000 KM/H"
+
+[node name="gear" type="Label" parent="Player/HUD" unique_id=721180897]
+offset_left = 218.0
+offset_top = 207.0
+offset_right = 300.0
+offset_bottom = 215.0
+theme_override_fonts/font = ExtResource("4_lbhrr")
+theme_override_font_sizes/font_size = 8
+text = "A/T"
+
+[node name="tacho" type="TextureProgressBar" parent="Player/HUD" unique_id=947084253]
+offset_left = 182.0
+offset_top = 182.0
+offset_right = 270.0
+offset_bottom = 227.0
+texture_over = ExtResource("5_p57ef")
+texture_progress = ExtResource("6_u5sy4")
+
+[node name="Camera3D" type="Camera3D" parent="Player" unique_id=969922971]
+transform = Transform3D(1.7019513, 0, 1.4210855e-14, 0, 1.7019513, 0, -1.4210855e-14, 0, 1.7019513, 0, 0.42059225, 1.3568064)
+fov = 68.0
