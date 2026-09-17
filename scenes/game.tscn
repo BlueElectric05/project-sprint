@@ -25,7 +25,7 @@ size = Vector3(0.61816406, 1, 0.03149414)
 size = Vector3(1.1035156, 1, 1.8847656)
 
 [sub_resource type="Gradient" id="Gradient_lnu2h"]
-offsets = PackedFloat32Array(0, 0.5, 0.51, 1)
+offsets = PackedFloat32Array(0, 0.17771085, 0.46686748, 1)
 colors = PackedColorArray(0.054902, 0.207843, 0.552941, 1, 0.188235, 0.470588, 0.886275, 1, 0.843137, 0.85098, 0.717647, 1, 0.843137, 0.85098, 0.717647, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_rb6b8"]

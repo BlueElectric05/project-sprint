@@ -5,6 +5,78 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_lnu2h"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(0, 0, 80, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(80, 0, 80, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(0, 0, 80, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tuyoq"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(320, 0, 80, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fjrip"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(400, 0, 80, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qlg0r"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(160, 0, 80, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
+atlas = ExtResource("1_3vyb7")
+region = Rect2(240, 0, 80, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2v1hp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g2els")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qhqgy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqkch")
+}],
+"loop": 1,
+"name": &"move",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tuyoq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fjrip")
+}],
+"loop": 1,
+"name": &"steer_max",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qlg0r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smehm")
+}],
+"loop": 1,
+"name": &"steer_min",
+"speed": 20.0
+}]
+
 [node name="Player" type="CharacterBody3D" unique_id=1463991567 groups=["player_car"]]
 collision_mask = 258
 script = ExtResource("1_g2els")
@@ -15,6 +87,15 @@ shape = SubResource("SphereShape3D_lnu2h")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=969359796]
 
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer" unique_id=377487314]
-texture = ExtResource("1_3vyb7")
+[node name="Shadow" type="ColorRect" parent="CanvasLayer" unique_id=23869767]
+offset_left = -16.0
+offset_top = -4.0
+offset_right = 16.0
+offset_bottom = 3.0
+color = Color(0, 0, 0, 0.5137255)
+
+[node name="car" type="AnimatedSprite2D" parent="CanvasLayer" unique_id=810221596]
+sprite_frames = SubResource("SpriteFrames_2v1hp")
+animation = &"steer_max"
+frame_progress = 0.45417392
 offset = Vector2(0, -16)

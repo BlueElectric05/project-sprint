@@ -11,7 +11,7 @@ extends CharacterBody3D
 
 # --- MAZDA MIATA NA 5-SPEED MANUAL TRANSMISSION ---
 @export var gear_speeds: Array[float] = [3.0, 5.2, 7.4, 9.4, 11.0]
-@export var gear_accelerations: Array[float] = [1.8, 1.45, 1.15, 0.9, 0.72]
+@export var gear_accelerations: Array[float] = [1.8, 1.45, 1.15, 0.9, 0.52]
 
 var current_gear: int = 1
 
@@ -34,7 +34,8 @@ var current_rpm: float = 1000.0
 
 # --- NODES ---
 @onready var camera: Camera3D = $Camera3D
-@onready var sprite: Sprite2D = $CanvasLayer/Sprite2D
+@onready var sprite: AnimatedSprite2D = $CanvasLayer/car
+@onready var shadow: ColorRect = $CanvasLayer/Shadow
 @onready var parallax: Parallax2D = $Background/Parallax2D
 @onready var speedometer: Label = $HUD/Speed
 @onready var gear_label: Label = $HUD/gear
@@ -42,8 +43,10 @@ var current_rpm: float = 1000.0
 
 @onready var camera_base_pos: Vector3 = camera.position
 @onready var camera_base_rot: Vector3 = camera.rotation
+@export var steer_max_ratio_threshold: float = 0.7
 
 var current_speed: float = 0.0
+var is_transitioning_steer: bool = false
 
 func _ready() -> void:
 	camera.top_level = true
@@ -61,6 +64,7 @@ func center_sprite_on_screen() -> void:
 		return
 	var viewport_size = get_viewport().get_visible_rect().size
 	sprite.global_position = Vector2(viewport_size.x / 2.0, viewport_size.y * 0.75).round()
+	shadow.global_position = Vector2(viewport_size.x / 2.2, viewport_size.y * 0.73).round()
 
 func update_speedometer() -> void:
 	if not speedometer:
@@ -118,6 +122,7 @@ func calculate_rpm() -> void:
 func _process(_delta: float) -> void:
 	update_speedometer()
 	calculate_rpm()
+	animate_sprite()
 
 	# Mode 7 Camera Position & Rotation
 	var smooth_cam_pos = global_position + (global_transform.basis * camera_base_pos)
@@ -198,3 +203,39 @@ func update_gear_state() -> void:
 		current_gear -= 1
 	elif current_gear < gear_speeds.size() and current_speed >= gear_speeds[current_gear - 1] * 0.94:
 		current_gear += 1
+
+func animate_sprite() -> void:
+	if not sprite:
+		return
+
+	var steer_input: float = Input.get_axis("steer_right", "steer_left")
+	var abs_speed: float = absf(current_speed)
+	
+	# Minimum velocity threshold to prevent near-zero freezing
+	var is_moving: bool = abs_speed > 0.1
+	var speed_ratio: float = clampf(abs_speed / maxf(max_speed, 0.001), 0.0, 1.0)
+
+	# 1. Map speed_scale to a playable range (0.4x at minimum roll, up to 1.8x at top speed)
+	if is_moving:
+		sprite.speed_scale = remap(speed_ratio, 0.0, 1.0, 0.4, 1.8)
+	else:
+		sprite.speed_scale = 1.0
+
+	# 2. STEERING STATE
+	if absf(steer_input) > 0.2 and is_moving:
+		sprite.flip_h = steer_input > 0.0
+		if abs_speed > 5.0:
+			sprite.play("steer_max")
+		else:
+			sprite.play("steer_min")
+		
+
+	# 3. MOVING STRAIGHT
+	elif is_moving:
+		sprite.play("move")
+		sprite.flip_h = false
+
+	# 4. IDLE STATE
+	else:
+		sprite.play("idle")
+		sprite.flip_h = false

@@ -2,7 +2,7 @@ extends Node
 
 # --- PITCH & VOLUME SETTINGS ---
 @export var min_pitch: float = 1.0          # Pitch at idle (1000 RPM)
-@export var max_pitch: float = 4.2          # Pitch at redline (7200 RPM)
+@export var max_pitch: float = 6.2          # Pitch at redline (7200 RPM)
 @export var pitch_smooth_speed: float = 15.0 
 
 var active_car: Node = null
@@ -56,7 +56,7 @@ func _process(delta: float) -> void:
 	if rpm_range <= 0.0:
 		return
 
-	# Normalize RPM percentage (0.0 to 1.0)
+	# Normalize RPM percentage   (0.0 to 1.0)
 	var rpm_pct: float = clampf((current_rpm - idle_rpm) / rpm_range, 0.0, 1.0)
 
 	# Calculate and apply pitch smoothly
