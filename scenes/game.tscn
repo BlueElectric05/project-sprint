@@ -15,23 +15,37 @@ lightmap_size_hint = Vector2i(12, 12)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lnu2h"]
 shading_mode = 0
+disable_ambient_light = true
+disable_fog = true
+disable_specular_occlusion = true
 albedo_texture = ExtResource("1_yqjtg")
 texture_filter = 0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vjlar"]
 size = Vector3(0.61816406, 1, 0.03149414)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_2v1hp"]
-size = Vector3(1.1035156, 1, 1.8847656)
+[sub_resource type="Gradient" id="Gradient_p57ef"]
+offsets = PackedFloat32Array(0, 0.5120482)
+colors = PackedColorArray(0.8789196, 0.9557721, 0.99320227, 0.3019608, 0.69664466, 0.86559165, 0.92197514, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2v1hp"]
+gradient = SubResource("Gradient_p57ef")
+width = 21
+height = 8
+fill_to = Vector2(0, 1)
 
 [sub_resource type="Gradient" id="Gradient_lnu2h"]
-offsets = PackedFloat32Array(0, 0.17771085, 0.46686748, 1)
-colors = PackedColorArray(0.054902, 0.207843, 0.552941, 1, 0.188235, 0.470588, 0.886275, 1, 0.843137, 0.85098, 0.717647, 1, 0.843137, 0.85098, 0.717647, 1)
+offsets = PackedFloat32Array(0, 0.8493976)
+colors = PackedColorArray(0.188235, 0.470588, 0.886275, 1, 0.63958484, 0.88139534, 0.9699504, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_rb6b8"]
 gradient = SubResource("Gradient_lnu2h")
-fill_from = Vector2(0.51086956, 0)
-fill_to = Vector2(0.51304346, 1)
+height = 32
+fill_to = Vector2(0, 0.4347826)
+
+[sub_resource type="LabelSettings" id="LabelSettings_p57ef"]
+font = ExtResource("4_lbhrr")
+font_size = 8
 
 [node name="Node3D" type="Node3D" unique_id=1553623825]
 
@@ -50,12 +64,19 @@ collision_layer = 2
 transform = Transform3D(1.71771, 0, 0, 0, 0.29049528, 0, 0, 0, 0.9999769, 0, 0.11693929, 0.021349695)
 shape = SubResource("BoxShape3D_vjlar")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1493620680]
-transform = Transform3D(1.71771, 0, 0, 0, 0.024361666, 0, 0, 0, 1, 0, 0, 0)
-shape = SubResource("BoxShape3D_2v1hp")
+[node name="CanvasLayer" type="CanvasLayer" parent="MeshInstance3D" unique_id=1579791194]
+
+[node name="ColorRect" type="TextureRect" parent="MeshInstance3D/CanvasLayer" unique_id=527425007]
+offset_top = 96.0
+offset_right = 320.0
+offset_bottom = 127.0
+texture = SubResource("GradientTexture2D_2v1hp")
 
 [node name="Player" parent="." unique_id=937364183 instance=ExtResource("1_uwrxv")]
-transform = Transform3D(-0.5875609, 0, -5.1366204e-08, 0, 0.5875609, 0, 5.1366204e-08, 0, -0.5875609, 11.059492, 0.021187335, 1.4701815)
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 11.059492, 0.021187335, 1.4701815)
+motion_mode = 1
+floor_stop_on_slope = false
+floor_block_on_wall = false
 
 [node name="Background" type="CanvasLayer" parent="Player" unique_id=2100774740]
 layer = -100
@@ -68,22 +89,23 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_rb6b8")
 
-[node name="TextureRect2" type="TextureRect" parent="Player/Background" unique_id=620258629]
+[node name="TextureRect2" type="ColorRect" parent="Player/Background" unique_id=590217773]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 115.0
+offset_top = 96.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("GradientTexture2D_rb6b8")
+color = Color(0.3764706, 0.65882355, 0, 1)
 
 [node name="Parallax2D" type="Parallax2D" parent="Player/Background" unique_id=557499524]
 repeat_size = Vector2(512, 0)
 
 [node name="TextureRect" type="TextureRect" parent="Player/Background/Parallax2D" unique_id=1287392282]
-offset_top = 83.0
-offset_right = 761.0
-offset_bottom = 123.0
+offset_left = -190.0
+offset_top = 64.0
+offset_right = 571.0
+offset_bottom = 104.0
 texture = ExtResource("2_lbhrr")
 stretch_mode = 2
 
@@ -95,33 +117,35 @@ offset_right = 320.0
 offset_bottom = 224.0
 color = Color(0, 0, 0, 1)
 
-[node name="Speed" type="Label" parent="Player/HUD" unique_id=172086626]
-offset_left = 218.0
+[node name="Speed" type="Label" parent="Player/HUD" unique_id=1475255366]
+offset_left = 256.0
 offset_top = 215.0
-offset_right = 316.0
+offset_right = 313.0
 offset_bottom = 223.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("4_lbhrr")
 theme_override_font_sizes/font_size = 8
 text = "000 KM/H"
-
-[node name="gear" type="Label" parent="Player/HUD" unique_id=721180897]
-offset_left = 218.0
-offset_top = 207.0
-offset_right = 300.0
-offset_bottom = 215.0
-theme_override_fonts/font = ExtResource("4_lbhrr")
-theme_override_font_sizes/font_size = 8
-text = "A/T"
+label_settings = SubResource("LabelSettings_p57ef")
 
 [node name="tacho" type="TextureProgressBar" parent="Player/HUD" unique_id=947084253]
-offset_left = 182.0
+offset_left = 224.0
 offset_top = 182.0
-offset_right = 270.0
+offset_right = 312.0
 offset_bottom = 227.0
 texture_over = ExtResource("5_p57ef")
 texture_progress = ExtResource("6_u5sy4")
 
+[node name="gear" type="Label" parent="Player/HUD" unique_id=721180897]
+offset_left = 256.0
+offset_top = 207.0
+offset_right = 309.0
+offset_bottom = 215.0
+theme_override_font_sizes/font_size = 8
+text = "A/T"
+label_settings = SubResource("LabelSettings_p57ef")
+
 [node name="Camera3D" type="Camera3D" parent="Player" unique_id=969922971]
-transform = Transform3D(1.7019513, 0, 1.4210855e-14, 0, 1.7019513, 0, -1.4210855e-14, 0, 1.7019513, 0, 0.42059225, 1.3568064)
-fov = 68.0
+transform = Transform3D(1.7019513, 0, 0, 0, 1.687391, 0.22214925, 0, -0.22214925, 1.687391, 0, 0.515, 1.48)
+fov = 65.0
+near = 0.57
+far = 13.0

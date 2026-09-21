@@ -2,9 +2,19 @@
 
 [ext_resource type="Script" uid="uid://eha5v0378nbp" path="res://scripts/audio_manager.gd" id="1_liach"]
 [ext_resource type="AudioStream" uid="uid://cucirwf8h31wk" path="res://assets/audio/engine01.wav" id="2_3asnw"]
+[ext_resource type="AudioStream" uid="uid://cxar7w6ya4l5n" path="res://assets/audio/music/Raving Zone.s3m" id="3_3asnw"]
 
 [node name="AudioManager" type="Node" unique_id=1633510544]
 script = ExtResource("1_liach")
 
-[node name="Engine01" type="AudioStreamPlayer" parent="." unique_id=1278133234]
+[node name="SFX" type="Node" parent="." unique_id=699393455]
+
+[node name="Engine01" type="AudioStreamPlayer" parent="SFX" unique_id=1278133234]
 stream = ExtResource("2_3asnw")
+volume_db = -3.0
+
+[node name="Music" type="Node" parent="." unique_id=3157362]
+
+[node name="Race01" type="AudioStreamPlayer" parent="Music" unique_id=1917085079]
+stream = ExtResource("3_3asnw")
+volume_db = -3.0

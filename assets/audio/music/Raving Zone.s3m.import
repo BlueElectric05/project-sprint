@@ -1,0 +1,18 @@
+[remap]
+
+importer="dudejoe870.openmptimporter"
+type="AudioStreamMPT"
+uid="uid://cxar7w6ya4l5n"
+path="res://.godot/imported/Raving Zone.s3m-39621f8ee0bf043985f3b8a7936f3671.res"
+
+[deps]
+
+source_file="res://assets/audio/music/Raving Zone.s3m"
+dest_files=["res://.godot/imported/Raving Zone.s3m-39621f8ee0bf043985f3b8a7936f3671.res"]
+
+[params]
+
+force/mono=false
+playback/loop_mode=1
+load/skip_plugins=false
+load/skip_subsongs_init=false

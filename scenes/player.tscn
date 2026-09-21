@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://6w0qivcl2n4m" path="res://assets/sprites/entities/miata.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://dwag3qc170qy1" path="res://scripts/player.gd" id="1_g2els"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_lnu2h"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_g2els"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
 atlas = ExtResource("1_3vyb7")
@@ -72,7 +72,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_smehm")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"steer_min",
 "speed": 20.0
 }]
@@ -82,8 +82,8 @@ collision_mask = 258
 script = ExtResource("1_g2els")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=834840101]
-transform = Transform3D(0.47, 0, 0, 0, 0.47, 0, 0, 0, 0.47, 0, 0.22, 0)
-shape = SubResource("SphereShape3D_lnu2h")
+transform = Transform3D(0.2787538, 0, 0, 0, 0.2787538, 0, 0, 0, 0.2787538, 0, 0.133989, 0)
+shape = SubResource("BoxShape3D_g2els")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=969359796]
 
@@ -96,6 +96,5 @@ color = Color(0, 0, 0, 0.5137255)
 
 [node name="car" type="AnimatedSprite2D" parent="CanvasLayer" unique_id=810221596]
 sprite_frames = SubResource("SpriteFrames_2v1hp")
-animation = &"steer_max"
-frame_progress = 0.45417392
+animation = &"steer_min"
 offset = Vector2(0, -16)
